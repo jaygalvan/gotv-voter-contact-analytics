@@ -218,3 +218,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# ============================================================
+# GOTV Project - Data Protection
+# ============================================================
+
+# Original voter/contact data
+voters_clean.csv
+contact_history.csv
+
+# Local databases
+gotv.db
+*.sqlite
+*.sqlite3
+
+# Database exports/backups
+*.dump
+*.backup
+*.bak
+
+# Environment/secrets
+.env
