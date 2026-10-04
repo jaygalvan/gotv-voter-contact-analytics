@@ -79,3 +79,38 @@ Result:
 ```text
 Production voter rows:       4,338
 Production duplicate IDs:        0
+```
+
+# 2. Duplicate VoterID Investigation
+
+## Problem
+
+The staging dataset contained many repeated VoterIDs.
+
+A simple DISTINCT operation was not sufficient because duplicate
+records were not always identical.
+
+For example, Voter-ID-3226 appeared four times and contained
+differences in voter attributes including:
+
+```text
+DriverLicCard
+FirstName
+LastName
+ResStreetAddress
+Potential Fraud
+```
+## Resolution
+
+The duplicate records were profiled using SQL aggregate functions and
+ROW_NUMBER().
+
+The analysis distinguished between:
+
+Exact duplicate records
+Records differing only by Potential Fraud
+Records containing additional conflicting voter information
+
+The source staging table was preserved and the deduplication was
+performed as a SQL transformation before production loading.
+
