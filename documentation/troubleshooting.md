@@ -100,17 +100,46 @@ LastName
 ResStreetAddress
 Potential Fraud
 ```
-## Resolution
 
-The duplicate records were profiled using SQL aggregate functions and
-ROW_NUMBER().
+## Investigation
+SQL aggregation was used to identify duplicated VoterIDs and compare
+the records within each duplicate group.
 
-The analysis distinguished between:
+The analysis showed that most duplicate groups contained:
 
-Exact duplicate records
-Records differing only by Potential Fraud
-Records containing additional conflicting voter information
+One record with Potential Fraud = 0
+One or more records with Potential Fraud = 1
 
-The source staging table was preserved and the deduplication was
-performed as a SQL transformation before production loading.
+Three duplicate groups contained more than one
+Potential Fraud = 0 record:
 
+```text
+Voter-ID-350
+Voter-ID-3771
+Voter-ID-971
+```
+
+These records were treated as exceptions because the source did not
+provide a reliable record-version field identifying which conflicting
+record was objectively correct.
+
+## Solution
+
+SQL ROW_NUMBER() logic was used to create a deterministic,
+one-row-per-VoterID production result.
+
+The transformation prioritized the non-flagged record and then used
+deterministic voter attributes as tie-breakers when multiple candidate
+records remained.
+
+The original staging table was preserved for audit purposes.
+
+## Validation
+The deduplicated result produced:
+
+```text
+Staging rows:               4,765
+Unique VoterIDs:            4,338
+Production voter rows:      4,338
+Production duplicate IDs:       0
+```
