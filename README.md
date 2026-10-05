@@ -52,4 +52,4 @@ ERICA Dataset
 
 [Dashboard link](https://datastudio.google.com/s/n1S02ZWxGjM)
 
-![Dashboard Preview]([dashboard](gotv-voter-contact-analytics/dashboard_overview.png)
+![Dashboard Preview](gotv-voter-contact-analytics/dashboard_overview.png)
