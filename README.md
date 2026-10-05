@@ -50,6 +50,6 @@ ERICA Dataset
 
 ## Dashboard
 
-[Dashboard link]
+[Dashboard link](https://datastudio.google.com/s/n1S02ZWxGjM)
 
 ![Dashboard Preview](dashboard/dashboard_overview.png)
